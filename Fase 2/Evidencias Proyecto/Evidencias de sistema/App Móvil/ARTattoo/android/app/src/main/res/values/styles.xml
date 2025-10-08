@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Tema del splash mientras arranca Flutter -->
+    <style name="LaunchTheme" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="android:windowBackground">@drawable/launch_background</item>
+        <item name="android:statusBarColor">@android:color/black</item>
+        <item name="android:navigationBarColor">@android:color/black</item>
+    </style>
+
+    <!-- Tema principal usado por la app (lo que tu Manifest llama NormalTheme) -->
+    <style name="NormalTheme" parent="Theme.Material3.Dark.NoActionBar">
+        <!-- Colores clave -->
+        <item name="colorPrimary">@color/md_theme_dark_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_dark_onPrimary</item>
+        <item name="colorSecondary">@color/md_theme_dark_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_dark_onSecondary</item>
+
+        <!-- Fondo y barras del sistema -->
+        <item name="android:windowBackground">@color/md_theme_dark_background</item>
+        <item name="android:statusBarColor">@android:color/black</item>
+        <item name="android:navigationBarColor">@android:color/black</item>
+
+        <!-- Superficies -->
+        <item name="colorSurface">@color/md_theme_dark_surface</item>
+        <item name="colorOnSurface">@color/md_theme_dark_onSurface</item>
+    </style>
+
+</resources>

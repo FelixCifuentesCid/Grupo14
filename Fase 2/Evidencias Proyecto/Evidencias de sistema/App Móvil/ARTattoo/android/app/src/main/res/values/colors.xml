@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Paleta ArtTattoo -->
+    <color name="arttattoo_yellow">#FFCC00</color>
+    <color name="arttattoo_yellow_dark">#E6B800</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+
+    <!-- Requeridos por Material 3 -->
+    <color name="md_theme_dark_background">#000000</color>
+    <color name="md_theme_dark_onBackground">#FFFFFF</color>
+    <color name="md_theme_dark_surface">#121212</color>
+    <color name="md_theme_dark_onSurface">#FFFFFF</color>
+    <color name="md_theme_dark_primary">@color/arttattoo_yellow</color>
+    <color name="md_theme_dark_onPrimary">@color/black</color>
+    <color name="md_theme_dark_secondary">@color/arttattoo_yellow_dark</color>
+    <color name="md_theme_dark_onSecondary">@color/black</color>
+</resources>
