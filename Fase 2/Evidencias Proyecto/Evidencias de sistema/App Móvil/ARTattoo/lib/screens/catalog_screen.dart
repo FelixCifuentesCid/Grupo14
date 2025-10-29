@@ -8,6 +8,8 @@ import 'threads_screen.dart';
 import 'design_detail_screen.dart';
 import 'appointments_screen.dart';
 import 'create_design_screen.dart';
+import 'favorites_screen.dart';
+import 'artist_profile_screen.dart';
 
 class CatalogScreen extends StatefulWidget {
   static const route = '/catalog';
@@ -18,6 +20,11 @@ class CatalogScreen extends StatefulWidget {
 
 class _CatalogScreenState extends State<CatalogScreen> {
   late Future<List<Map<String, dynamic>>> _future;
+
+  // ---- Search ----
+  final _qCtrl = TextEditingController();
+  String? _currentQ;
+  Timer? _debounce;
 
   // ---- Unread badge ----
   int _unread = 0;
@@ -33,12 +40,14 @@ class _CatalogScreenState extends State<CatalogScreen> {
   @override
   void dispose() {
     _poll?.cancel();
+    _debounce?.cancel();
+    _qCtrl.dispose();
     super.dispose();
   }
 
   // ---- Polling de no leídos ----
   void _startUnreadPolling() {
-    _fetchUnread(); // primer fetch inmediato
+    _fetchUnread();
     _poll?.cancel();
     _poll = Timer.periodic(const Duration(seconds: 5), (_) => _fetchUnread());
   }
@@ -59,14 +68,43 @@ class _CatalogScreenState extends State<CatalogScreen> {
         if (v is String) total += int.tryParse(v) ?? 0;
       }
       if (mounted && total != _unread) setState(() => _unread = total);
-    } catch (_) {
-      // Silenciar fallos intermitentes
+    } catch (_) {}
+  }
+
+  // ---- Búsqueda ----
+  void _onSearchChanged(String value) {
+    _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 400), _applySearch);
+  }
+
+  void _applySearch() {
+    final raw = _qCtrl.text.trim();
+    String? q;
+    if (raw.isEmpty) {
+      q = null;
+    } else if (raw.startsWith('@')) {
+      q = raw;
+    } else {
+      if ((raw.startsWith('"') && raw.endsWith('"')) ||
+          (raw.startsWith('“') && raw.endsWith('”'))) {
+        q = raw.substring(1, raw.length - 1);
+      } else {
+        q = raw;
+      }
     }
+    _currentQ = q;
+    setState(() => _future = Api.getDesigns(q: q));
+  }
+
+  Future<void> _clearSearch() async {
+    _qCtrl.clear();
+    _currentQ = null;
+    setState(() => _future = Api.getDesigns());
   }
 
   // ---- Acciones ----
   Future<void> _refresh() async {
-    setState(() => _future = Api.getDesigns());
+    setState(() => _future = Api.getDesigns(q: _currentQ));
   }
 
   Future<void> _goCreateDesign() async {
@@ -87,10 +125,18 @@ class _CatalogScreenState extends State<CatalogScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (_) => ThreadsScreen(api: ChatApi(t))),
-    ).then((_) {
-      // refresca contador al volver
-      _fetchUnread();
-    });
+    ).then((_) => _fetchUnread());
+  }
+
+  void _goFavorites() {
+    final t = authState.token;
+    if (t == null || t.isEmpty) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Inicia sesión para ver favoritos')));
+      return;
+    }
+    Navigator.push(context, MaterialPageRoute(builder: (_) => const FavoritesScreen()))
+        .then((_) => _refresh());
   }
 
   @override
@@ -98,7 +144,6 @@ class _CatalogScreenState extends State<CatalogScreen> {
     return AppShell(
       title: 'Diseños',
       actions: [
-        // ---- Botón de chats con badge rojo ----
         Padding(
           padding: const EdgeInsets.only(right: 4),
           child: Stack(
@@ -135,7 +180,11 @@ class _CatalogScreenState extends State<CatalogScreen> {
             ],
           ),
         ),
-
+        IconButton(
+          onPressed: _goFavorites,
+          icon: const Icon(Icons.favorite_outline),
+          tooltip: 'Mis favoritos',
+        ),
         IconButton(
           onPressed: () => Navigator.pushNamed(context, AppointmentsScreen.route),
           icon: const Icon(Icons.calendar_month_outlined),
@@ -150,143 +199,273 @@ class _CatalogScreenState extends State<CatalogScreen> {
               tooltip: 'Nuevo diseño',
             )
           : null,
-
-      child: FutureBuilder<List<Map<String, dynamic>>>(
-        future: _future,
-        builder: (_, snap) {
-          if (snap.connectionState != ConnectionState.done) return const Busy();
-          if (snap.hasError) {
-            debugPrint('[Catalog] ERROR: ${snap.error}');
-            return Center(child: Text('Error: ${snap.error}'));
-          }
-
-          final items = snap.data ?? const <Map<String, dynamic>>[];
-          debugPrint('[Catalog] diseños recibidos = ${items.length}');
-
-          if (items.isEmpty) {
-            return SafeArea(
-              child: RefreshIndicator(
-                onRefresh: _refresh,
-                child: ListView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  children: const [
-                    SizedBox(height: 180),
-                    Center(child: Text('Sin diseños aún')),
-                  ],
-                ),
-              ),
-            );
-          }
-
-          return SafeArea(
-            child: RefreshIndicator(
-              onRefresh: _refresh,
-              child: GridView.builder(
-                physics: const AlwaysScrollableScrollPhysics(),
-                padding: const EdgeInsets.all(12),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  // ↓ Más alto cada ítem para que quepa todo
-                  childAspectRatio: .60,
-                  crossAxisSpacing: 12,
-                  mainAxisSpacing: 12,
-                ),
-                itemCount: items.length,
-                itemBuilder: (_, i) {
-                  final d = items[i];
-                  return Card(
-                    clipBehavior: Clip.antiAlias,
-                    child: InkWell(
-                      onTap: () => Navigator.push(
-                        _,
-                        MaterialPageRoute(
-                          builder: (__) => DesignDetailScreen(design: d),
-                        ),
+      child: Column(
+        children: [
+          // ---- Buscador ----
+          Padding(
+            padding: const EdgeInsets.fromLTRB(12, 12, 12, 4),
+            child: TextField(
+              controller: _qCtrl,
+              onChanged: _onSearchChanged,
+              onSubmitted: (_) => _applySearch(),
+              decoration: InputDecoration(
+                hintText: 'Buscar @artista o texto (puedes usar "comillas")',
+                prefixIcon: const Icon(Icons.search),
+                suffixIcon: _qCtrl.text.isEmpty
+                    ? null
+                    : IconButton(
+                        icon: const Icon(Icons.close),
+                        tooltip: 'Limpiar',
+                        onPressed: _clearSearch,
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
+              ),
+            ),
+          ),
+
+          // ---- Lista / Grid ----
+          Expanded(
+            child: FutureBuilder<List<Map<String, dynamic>>>(
+              future: _future,
+              builder: (_, snap) {
+                if (snap.connectionState != ConnectionState.done) return const Busy();
+                if (snap.hasError) {
+                  debugPrint('[Catalog] ERROR: ${snap.error}');
+                  return Center(child: Text('Error: ${snap.error}'));
+                }
+
+                final items = snap.data ?? const <Map<String, dynamic>>[];
+
+                if (items.isEmpty) {
+                  return SafeArea(
+                    child: RefreshIndicator(
+                      onRefresh: _refresh,
+                      child: ListView(
+                        physics: const AlwaysScrollableScrollPhysics(),
                         children: [
-                          AspectRatio(
-                            aspectRatio: 1,
-                            child: (d['image_url'] != null &&
-                                    (d['image_url'] as String).isNotEmpty)
-                                ? Image.network(
-                                    d['image_url'],
-                                    fit: BoxFit.cover,
-                                    errorBuilder: (_, __, ___) =>
-                                        const ColoredBox(color: Color(0x11000000)),
-                                  )
-                                : const ColoredBox(color: Color(0x11000000)),
-                          ),
-                          // Bloque inferior compacto
-                          Expanded(
-                            child: Padding(
-                              // ↓ Paddings más chicos
-                              padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    d['title']?.toString() ?? '—',
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  Text(
-                                    d['artist_name']?.toString() ?? '—',
-                                    style: TextStyle(
-                                      color: Colors.grey[700],
-                                      fontSize: 12,
-                                    ),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  Row(
-                                    children: [
-                                      // Botón más compacto (alto ~32)
-                                      FilledButton.tonal(
-                                        onPressed: () => Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (_) =>
-                                                DesignDetailScreen(design: d),
-                                          ),
-                                        ),
-                                        style: FilledButton.styleFrom(
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 10,
-                                            vertical: 6,
-                                          ),
-                                          minimumSize: const Size(0, 32),
-                                          visualDensity: VisualDensity.compact,
-                                        ),
-                                        child: const Text('Ver'),
-                                      ),
-                                      const Spacer(),
-                                      Text(
-                                        d['price'] != null ? '\$${d['price']}' : '—',
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                          const SizedBox(height: 120),
+                          Center(
+                            child: Text(
+                              _currentQ == null || _currentQ!.isEmpty
+                                  ? 'Sin diseños aún'
+                                  : 'Sin resultados para "${_currentQ!}"',
                             ),
                           ),
                         ],
                       ),
                     ),
                   );
-                },
-              ),
+                }
+
+                return SafeArea(
+                  child: RefreshIndicator(
+                    onRefresh: _refresh,
+                    child: GridView.builder(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      padding: const EdgeInsets.all(12),
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: .60,
+                        crossAxisSpacing: 12,
+                        mainAxisSpacing: 12,
+                      ),
+                      itemCount: items.length,
+                      itemBuilder: (_, i) {
+                        final d = items[i];
+
+                        int likes = 0;
+                        final rawLikes = d['likes_count'];
+                        if (rawLikes is num) likes = rawLikes.toInt();
+                        else likes = int.tryParse('$rawLikes') ?? 0;
+                        final isFav = d['is_favorited'] == true;
+
+                        return Card(
+                          clipBehavior: Clip.antiAlias,
+                          child: InkWell(
+                            onTap: () => Navigator.push(
+                              _,
+                              MaterialPageRoute(
+                                builder: (__) => DesignDetailScreen(design: d),
+                              ),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                // Imagen
+                                AspectRatio(
+                                  aspectRatio: 1,
+                                  child: (d['image_url'] != null &&
+                                          (d['image_url'] as String).isNotEmpty)
+                                      ? Image.network(
+                                          d['image_url'],
+                                          fit: BoxFit.cover,
+                                          errorBuilder: (_, __, ___) =>
+                                              const ColoredBox(color: Color(0x11000000)),
+                                        )
+                                      : const ColoredBox(color: Color(0x11000000)),
+                                ),
+
+                                // Contenido anclado abajo (sin “aire” inferior)
+                                Expanded(
+                                  child: Align(
+                                    alignment: Alignment.bottomCenter,
+                                    child: Padding(
+                                      padding: const EdgeInsets.fromLTRB(10, 4, 10, 6),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          // Título
+                                          Text(
+                                            d['title']?.toString() ?? '—',
+                                            style: const TextStyle(fontWeight: FontWeight.w700),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          const SizedBox(height: 2),
+                                          // Artista -> perfil
+                                          GestureDetector(
+                                            onTap: () {
+                                              final aid = d['artist_id'] as int?;
+                                              if (aid != null) {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (_) =>
+                                                        ArtistProfileScreen(artistId: aid),
+                                                  ),
+                                                );
+                                              }
+                                            },
+                                            child: Text(
+                                              d['artist_name']?.toString() ?? '—',
+                                              style: TextStyle(
+                                                color: Colors.grey[700],
+                                                fontSize: 12,
+                                              ),
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 4),
+
+                                          // Fila: Ver | corazón + número (sin precio)
+                                          Row(
+                                            children: [
+                                              FilledButton.tonal(
+                                                onPressed: () => Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (_) =>
+                                                        DesignDetailScreen(design: d),
+                                                  ),
+                                                ),
+                                                style: FilledButton.styleFrom(
+                                                  padding: const EdgeInsets.symmetric(
+                                                    horizontal: 10,
+                                                    vertical: 6,
+                                                  ),
+                                                  minimumSize: const Size(0, 30),
+                                                  visualDensity: VisualDensity.compact,
+                                                ),
+                                                child: const Text('Ver'),
+                                              ),
+                                              const Spacer(),
+                                              // Corazón + numerito pegado
+                                              Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  IconButton(
+                                                    tooltip: isFav
+                                                        ? 'Quitar de favoritos'
+                                                        : 'Agregar a favoritos',
+                                                    padding: EdgeInsets.zero,
+                                                    constraints: const BoxConstraints(
+                                                      minWidth: 28, minHeight: 28,
+                                                    ),
+                                                    iconSize: 18,
+                                                    splashRadius: 18,
+                                                    onPressed: () async {
+                                                      if (authState.token == null ||
+                                                          authState.token!.isEmpty) {
+                                                        if (mounted) {
+                                                          ScaffoldMessenger.of(context)
+                                                              .showSnackBar(
+                                                            const SnackBar(
+                                                              content: Text(
+                                                                'Inicia sesión para usar favoritos',
+                                                              ),
+                                                            ),
+                                                          );
+                                                        }
+                                                        return;
+                                                      }
+                                                      try {
+                                                        int currentLikes =
+                                                            (d['likes_count'] is num)
+                                                                ? (d['likes_count'] as num).toInt()
+                                                                : int.tryParse(
+                                                                        '${d['likes_count']}') ??
+                                                                    likes;
+
+                                                        if (isFav) {
+                                                          await Api.removeFavorite(d['id'] as int);
+                                                          d['is_favorited'] = false;
+                                                          d['likes_count'] =
+                                                              (currentLikes - 1).clamp(0, 1 << 31);
+                                                        } else {
+                                                          await Api.addFavorite(d['id'] as int);
+                                                          d['is_favorited'] = true;
+                                                          d['likes_count'] = currentLikes + 1;
+                                                        }
+                                                        if (mounted) setState(() {});
+                                                      } catch (e) {
+                                                        if (mounted) {
+                                                          ScaffoldMessenger.of(context)
+                                                              .showSnackBar(ko(e.toString()));
+                                                        }
+                                                      }
+                                                    },
+                                                    icon: Icon(
+                                                      isFav
+                                                          ? Icons.favorite
+                                                          : Icons.favorite_border,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(width: 2),
+                                                  ConstrainedBox(
+                                                    constraints: const BoxConstraints(minWidth: 14),
+                                                    child: Text(
+                                                      '${d['likes_count'] ?? likes}',
+                                                      style: const TextStyle(
+                                                        fontSize: 12,
+                                                        fontWeight: FontWeight.w600,
+                                                      ),
+                                                      maxLines: 1,
+                                                      overflow: TextOverflow.ellipsis,
+                                                      textAlign: TextAlign.left,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                );
+              },
             ),
-          );
-        },
+          ),
+        ],
       ),
     );
   }

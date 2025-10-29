@@ -9,6 +9,7 @@ import 'screens/appointments_screen.dart';
 import 'screens/create_design_screen.dart';
 import 'screens/artist_profile_screen.dart';
 import 'screens/threads_screen.dart';
+import 'screens/favorites_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -150,6 +151,7 @@ class ARTattooApp extends StatelessWidget {
         CatalogScreen.route: (_) => const CatalogScreen(),
         AppointmentsScreen.route: (_) => const AppointmentsScreen(),
         '/create-design': (_) => const CreateDesignScreen(),
+        FavoritesScreen.route: (_) => const FavoritesScreen(),
         // Ruta nombrada para ver hilos de chat
         ThreadsScreen.route: (_) {
           final t = authState.token;

@@ -1,7 +1,11 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+
 import '../core/chat_api.dart';
 import '../core/auth_state.dart';
+import '../core/api.dart';
 
 class ChatScreen extends StatefulWidget {
   final ChatApi api;
@@ -15,7 +19,9 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final _c = TextEditingController();
   final _scroll = ScrollController();
-  final Set<int> _seenIds = <int>{};              // <- para desduplicar
+  final Set<int> _seenIds = <int>{}; // desduplicar
+  final _picker = ImagePicker();
+
   List<Map<String, dynamic>> _msgs = [];
   bool _loading = true;
   int? _lastId;
@@ -50,12 +56,10 @@ class _ChatScreenState extends State<ChatScreen> {
   void _addMessage(Map<String, dynamic> m) {
     final id = _msgId(m);
     if (id == null) return;
-    if (_seenIds.contains(id)) return;         // ya existe -> no duplicar
+    if (_seenIds.contains(id)) return; // ya existe -> no duplicar
     _seenIds.add(id);
     _msgs.add(m);
-    if (_lastId == null || id > _lastId!) {
-      _lastId = id;
-    }
+    if (_lastId == null || id > _lastId!) _lastId = id;
   }
 
   void _addMany(List<Map<String, dynamic>> items) {
@@ -89,9 +93,11 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   void _openRealtimeOrPoll() {
-    _sseSub = widget.api.openSseStream(widget.threadId, lastId: _lastId).listen((msg) {
+    _sseSub = widget.api
+        .openSseStream(widget.threadId, lastId: _lastId)
+        .listen((msg) {
       setState(() {
-        _addMessage(msg);                      // <- ya deduplica
+        _addMessage(msg); // dedupe
       });
       _jumpBottom();
       if (_lastId != null) {
@@ -109,10 +115,11 @@ class _ChatScreenState extends State<ChatScreen> {
     _pollTimer?.cancel();
     _pollTimer = Timer.periodic(const Duration(seconds: 3), (_) async {
       try {
-        final news = await widget.api.getMessages(widget.threadId, afterId: _lastId, limit: 50);
+        final news = await widget.api
+            .getMessages(widget.threadId, afterId: _lastId, limit: 50);
         if (news.isNotEmpty) {
           setState(() {
-            _addMany(news);                    // <- dedupe
+            _addMany(news); // dedupe
           });
           _jumpBottom();
           if (_lastId != null) {
@@ -120,7 +127,7 @@ class _ChatScreenState extends State<ChatScreen> {
           }
         }
       } catch (_) {
-        // silenciar intermitencias de red
+        // ignorar intermitencias
       }
     });
   }
@@ -128,7 +135,7 @@ class _ChatScreenState extends State<ChatScreen> {
   void _jumpBottom() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!_scroll.hasClients) return;
-      _scroll.jumpTo(_scroll.position.maxScrollExtent + 120);
+      _scroll.jumpTo(_scroll.position.maxScrollExtent + 160);
     });
   }
 
@@ -138,25 +145,63 @@ class _ChatScreenState extends State<ChatScreen> {
     _c.clear();
 
     try {
-      // 1) Enviar (no agregamos eco local)
+      // 1) Enviar (sin eco local)
       await widget.api.sendMessage(widget.threadId, text: text);
 
-      // 2) Pull delta para traer el mensaje con su id real
-      final delta = await widget.api.getMessages(widget.threadId, afterId: _lastId, limit: 10);
+      // 2) Pull delta (trae id real)
+      final delta = await widget.api
+          .getMessages(widget.threadId, afterId: _lastId, limit: 10);
       if (delta.isNotEmpty) {
         setState(() {
-          _addMany(delta);                     // <- dedupe
+          _addMany(delta); // dedupe
         });
         _jumpBottom();
         if (_lastId != null) {
           unawaited(widget.api.markRead(widget.threadId, _lastId!));
         }
       }
-      // Si además llega por SSE/poll, _addMessage lo ignorará por duplicado.
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('No se pudo enviar: $e')),
+      if (!mounted) return;
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('No se pudo enviar: $e')));
+    }
+  }
+
+  Future<void> _pickAndSendImage() async {
+    try {
+      final x = await _picker.pickImage(
+        source: ImageSource.gallery,
+        maxWidth: 1600,
+        imageQuality: 92,
       );
+      if (x == null) return;
+
+      final bytes = await x.readAsBytes();
+      final ext = x.path.toLowerCase().endsWith('.png') ? 'png' : 'jpg';
+      final b64 = 'data:image/$ext;base64,${base64Encode(bytes)}';
+
+      // 1) Subir para obtener URL pública
+      final url = await Api.uploadImageBase64(b64);
+
+      // 2) Enviar mensaje con image_url
+      await widget.api.sendMessage(widget.threadId, imageUrl: url);
+
+      // 3) Pull delta
+      final delta = await widget.api
+          .getMessages(widget.threadId, afterId: _lastId, limit: 10);
+      if (delta.isNotEmpty) {
+        setState(() {
+          _addMany(delta);
+        });
+        _jumpBottom();
+        if (_lastId != null) {
+          unawaited(widget.api.markRead(widget.threadId, _lastId!));
+        }
+      }
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('No se pudo adjuntar: $e')));
     }
   }
 
@@ -168,8 +213,87 @@ class _ChatScreenState extends State<ChatScreen> {
     return false;
   }
 
+  Widget _bubble(Map<String, dynamic> m) {
+    final isMine = _isMine(m);
+    final text = (m['text'] as String?)?.trim();
+    final img = (m['image_url'] as String?)?.trim();
+    final hasText = text != null && text.isNotEmpty;
+    final hasImg = img != null && img.isNotEmpty;
+
+    final bg = isMine ? Colors.blueAccent : Colors.grey.shade800;
+
+    Widget content;
+    if (hasText && hasImg) {
+      content = Column(
+        crossAxisAlignment:
+            isMine ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        children: [
+          Text(text!,
+              style: const TextStyle(color: Colors.white), textAlign: TextAlign.left),
+          const SizedBox(height: 8),
+          _imageThumb(img!),
+        ],
+      );
+    } else if (hasImg) {
+      content = _imageThumb(img!);
+    } else if (hasText) {
+      content = Text(text!, style: const TextStyle(color: Colors.white));
+    } else {
+      content = const Text('[mensaje vacío]',
+          style: TextStyle(color: Colors.white70));
+    }
+
+    return Align(
+      alignment: isMine ? Alignment.centerRight : Alignment.centerLeft,
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 4),
+        padding: hasImg
+            ? const EdgeInsets.all(6)
+            : const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        constraints: const BoxConstraints(maxWidth: 320),
+        decoration: BoxDecoration(
+          color: bg,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: content,
+      ),
+    );
+  }
+
+  Widget _imageThumb(String url) {
+    return GestureDetector(
+      onTap: () => _openImage(url),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        child: AspectRatio(
+          aspectRatio: 4 / 3,
+          child: Image.network(
+            url,
+            fit: BoxFit.cover,
+            errorBuilder: (_, __, ___) =>
+                const SizedBox(height: 120, child: Center(child: Text('[imagen]'))),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _openImage(String url) {
+    showDialog(
+      context: context,
+      builder: (_) => Dialog(
+        backgroundColor: Colors.black87,
+        insetPadding: const EdgeInsets.all(12),
+        child: InteractiveViewer(
+          child: Image.network(url, fit: BoxFit.contain),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final hint = 'Escribe un mensaje… (menciona @tink para el asistente)';
     return Scaffold(
       appBar: AppBar(title: const Text('Chat')),
       body: Column(
@@ -179,41 +303,29 @@ class _ChatScreenState extends State<ChatScreen> {
                 ? const Center(child: CircularProgressIndicator())
                 : ListView.builder(
                     controller: _scroll,
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                     itemCount: _msgs.length,
-                    itemBuilder: (_, i) {
-                      final m = _msgs[i];
-                      final isMine = _isMine(m);
-                      final text = (m['text'] as String?)?.trim();
-                      final hasText = text != null && text.isNotEmpty;
-                      return Align(
-                        alignment: isMine ? Alignment.centerRight : Alignment.centerLeft,
-                        child: Container(
-                          margin: const EdgeInsets.symmetric(vertical: 4),
-                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                          constraints: const BoxConstraints(maxWidth: 320),
-                          decoration: BoxDecoration(
-                            color: isMine ? Colors.blueAccent : Colors.grey.shade800,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: hasText
-                              ? Text(text!, style: const TextStyle(color: Colors.white))
-                              : const Text('[imagen]', style: TextStyle(color: Colors.white70)),
-                        ),
-                      );
-                    },
+                    itemBuilder: (_, i) => _bubble(_msgs[i]),
                   ),
           ),
           SafeArea(
             child: Row(
               children: [
+                // Adjuntar imagen
+                IconButton(
+                  tooltip: 'Adjuntar imagen',
+                  icon: const Icon(Icons.image),
+                  onPressed: _pickAndSendImage,
+                ),
+                // Campo de texto
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.fromLTRB(12, 6, 6, 12),
+                    padding: const EdgeInsets.fromLTRB(0, 6, 6, 12),
                     child: TextField(
                       controller: _c,
                       decoration: InputDecoration(
-                        hintText: 'Escribe un mensaje…',
+                        hintText: hint,
                         filled: true,
                         fillColor: Colors.grey.shade900,
                         border: OutlineInputBorder(
@@ -221,6 +333,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           borderSide: BorderSide.none,
                         ),
                       ),
+                      textInputAction: TextInputAction.send,
                       onSubmitted: (_) => _send(),
                     ),
                   ),
