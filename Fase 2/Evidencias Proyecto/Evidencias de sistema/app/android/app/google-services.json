@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "262640011211",
+    "project_id": "artattoo-5ba9b",
+    "storage_bucket": "artattoo-5ba9b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:262640011211:android:c2fcd20a9092bbcaeb184e",
+        "android_client_info": {
+          "package_name": "com.example.artattoo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAaS5QKdFMx5MsEcIdULxX8GkllP3-RLGU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="arttattoo_yellow">#FFCC00</color>
+    <color name="arttattoo_yellow_dark">#E6B800</color>
+    <color name="black">#000000</color>
+    <color name="md_theme_dark_background">#000000</color>
+    <color name="md_theme_dark_onBackground">#FFFFFF</color>
+    <color name="md_theme_dark_onPrimary">@color/black</color>
+    <color name="md_theme_dark_onSecondary">@color/black</color>
+    <color name="md_theme_dark_onSurface">#FFFFFF</color>
+    <color name="md_theme_dark_primary">@color/arttattoo_yellow</color>
+    <color name="md_theme_dark_secondary">@color/arttattoo_yellow_dark</color>
+    <color name="md_theme_dark_surface">#121212</color>
+    <color name="white">#FFFFFF</color>
+    <string name="gcm_defaultSenderId" translatable="false">262640011211</string>
+    <string name="google_api_key" translatable="false">AIzaSyAaS5QKdFMx5MsEcIdULxX8GkllP3-RLGU</string>
+    <string name="google_app_id" translatable="false">1:262640011211:android:c2fcd20a9092bbcaeb184e</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyAaS5QKdFMx5MsEcIdULxX8GkllP3-RLGU</string>
+    <string name="google_storage_bucket" translatable="false">artattoo-5ba9b.firebasestorage.app</string>
+    <string name="project_id" translatable="false">artattoo-5ba9b</string>
+    <style name="LaunchTheme" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="android:windowBackground">@drawable/launch_background</item>
+        <item name="android:statusBarColor">@android:color/black</item>
+        <item name="android:navigationBarColor">@android:color/black</item>
+    </style>
+    <style name="NormalTheme" parent="Theme.Material3.Dark.NoActionBar">
+        
+        <item name="colorPrimary">@color/md_theme_dark_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_dark_onPrimary</item>
+        <item name="colorSecondary">@color/md_theme_dark_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_dark_onSecondary</item>
+
+        
+        <item name="android:windowBackground">@color/md_theme_dark_background</item>
+        <item name="android:statusBarColor">@android:color/black</item>
+        <item name="android:navigationBarColor">@android:color/black</item>
+
+        
+        <item name="colorSurface">@color/md_theme_dark_surface</item>
+        <item name="colorOnSurface">@color/md_theme_dark_onSurface</item>
+    </style>
+</resources>

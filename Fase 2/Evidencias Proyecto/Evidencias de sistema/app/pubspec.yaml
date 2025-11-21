@@ -1,0 +1,37 @@
+name: artattoo
+description: Catalogo de tatuajes + reservas (MVP sin Try-On)
+version: 0.1.0
+
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Core
+  camera: ^0.11.0
+  google_mlkit_pose_detection: ^0.12.0
+  permission_handler: ^11.3.1
+  http: ^1.2.2
+  shared_preferences: ^2.2.2
+  google_fonts: ^6.2.1
+  url_launcher: ^6.3.0
+  app_links: ^6.2.0
+  image_picker: ^1.0.7
+  # Push & notificaciones
+  firebase_core: ^3.2.0
+  firebase_messaging: ^15.0.0
+  flutter_local_notifications: ^17.2.0
+  timezone:
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/image.png
+    - assets/tattoo.png
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0

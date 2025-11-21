@@ -1,0 +1,24 @@
+R_DEF: Internal format may change without notice
+local
+color arttattoo_yellow
+color arttattoo_yellow_dark
+color black
+color md_theme_dark_background
+color md_theme_dark_onBackground
+color md_theme_dark_onPrimary
+color md_theme_dark_onSecondary
+color md_theme_dark_onSurface
+color md_theme_dark_primary
+color md_theme_dark_secondary
+color md_theme_dark_surface
+color white
+drawable launch_background
+mipmap ic_launcher
+string gcm_defaultSenderId
+string google_api_key
+string google_app_id
+string google_crash_reporting_api_key
+string google_storage_bucket
+string project_id
+style LaunchTheme
+style NormalTheme

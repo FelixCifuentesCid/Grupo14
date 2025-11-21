@@ -1,0 +1,509 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.artattoo"
+4    android:versionCode="1"
+5    android:versionName="0.1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="24"
+9        android:targetSdkVersion="36" />
+10    <!--
+11         The INTERNET permission is required for development. Specifically,
+12         the Flutter tool needs it to communicate with the running application
+13         to allow setting breakpoints, to provide hot reload, etc.
+14    -->
+15    <uses-permission android:name="android.permission.INTERNET" />
+15-->C:\Users\nautilo\Desktop\APT\ARTattoo\android\app\src\main\AndroidManifest.xml:7:5-67
+15-->C:\Users\nautilo\Desktop\APT\ARTattoo\android\app\src\main\AndroidManifest.xml:7:22-64
+16    <!-- FCM / Android 13+ -->
+17    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" /> <!-- Permite consultar apps que procesan texto (lo usa el engine de Flutter) -->
+17-->C:\Users\nautilo\Desktop\APT\ARTattoo\android\app\src\main\AndroidManifest.xml:5:5-77
+17-->C:\Users\nautilo\Desktop\APT\ARTattoo\android\app\src\main\AndroidManifest.xml:5:22-74
+18    <queries>
+18-->C:\Users\nautilo\Desktop\APT\ARTattoo\android\app\src\main\AndroidManifest.xml:61:5-66:15
+19        <intent>
+19-->C:\Users\nautilo\Desktop\APT\ARTattoo\android\app\src\main\AndroidManifest.xml:62:9-65:18
+20            <action android:name="android.intent.action.PROCESS_TEXT" />
+20-->C:\Users\nautilo\Desktop\APT\ARTattoo\android\app\src\main\AndroidManifest.xml:63:13-73
+20-->C:\Users\nautilo\Desktop\APT\ARTattoo\android\app\src\main\AndroidManifest.xml:63:21-70
+21
+22            <data android:mimeType="text/plain" />
+22-->C:\Users\nautilo\Desktop\APT\ARTattoo\android\app\src\main\AndroidManifest.xml:64:13-51
+22-->C:\Users\nautilo\Desktop\APT\ARTattoo\android\app\src\main\AndroidManifest.xml:64:19-48
+23        </intent>
+24    </queries>
+25
+26    <uses-permission android:name="android.permission.VIBRATE" />
+26-->[:flutter_local_notifications] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_local_notifications-17.2.4\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:7:5-66
+26-->[:flutter_local_notifications] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_local_notifications-17.2.4\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:7:22-63
+27    <uses-permission android:name="android.permission.WAKE_LOCK" />
+27-->[:firebase_messaging] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging-15.2.10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:8:5-68
+27-->[:firebase_messaging] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging-15.2.10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:8:22-65
+28    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- Required by older versions of Google Play services to create IID tokens -->
+28-->[:firebase_messaging] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging-15.2.10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:9:5-79
+28-->[:firebase_messaging] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging-15.2.10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:9:22-76
+29    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+29-->[com.google.firebase:firebase-messaging:25.0.1] C:\Users\nautilo\.gradle\caches\8.12\transforms\1a66bdb21f919ebc2f9055a66ed9d21d\transformed\jetified-firebase-messaging-25.0.1\AndroidManifest.xml:26:5-82
+29-->[com.google.firebase:firebase-messaging:25.0.1] C:\Users\nautilo\.gradle\caches\8.12\transforms\1a66bdb21f919ebc2f9055a66ed9d21d\transformed\jetified-firebase-messaging-25.0.1\AndroidManifest.xml:26:22-79
+30    <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
+30-->[com.google.android.gms:play-services-measurement-api:23.0.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\c78288f82736fcf1fbe1b57b49d5575c\transformed\jetified-play-services-measurement-api-23.0.0\AndroidManifest.xml:25:5-79
+30-->[com.google.android.gms:play-services-measurement-api:23.0.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\c78288f82736fcf1fbe1b57b49d5575c\transformed\jetified-play-services-measurement-api-23.0.0\AndroidManifest.xml:25:22-76
+31    <uses-permission android:name="android.permission.ACCESS_ADSERVICES_ATTRIBUTION" />
+31-->[com.google.android.gms:play-services-measurement-api:23.0.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\c78288f82736fcf1fbe1b57b49d5575c\transformed\jetified-play-services-measurement-api-23.0.0\AndroidManifest.xml:26:5-88
+31-->[com.google.android.gms:play-services-measurement-api:23.0.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\c78288f82736fcf1fbe1b57b49d5575c\transformed\jetified-play-services-measurement-api-23.0.0\AndroidManifest.xml:26:22-85
+32    <uses-permission android:name="android.permission.ACCESS_ADSERVICES_AD_ID" />
+32-->[com.google.android.gms:play-services-measurement-api:23.0.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\c78288f82736fcf1fbe1b57b49d5575c\transformed\jetified-play-services-measurement-api-23.0.0\AndroidManifest.xml:27:5-82
+32-->[com.google.android.gms:play-services-measurement-api:23.0.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\c78288f82736fcf1fbe1b57b49d5575c\transformed\jetified-play-services-measurement-api-23.0.0\AndroidManifest.xml:27:22-79
+33    <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" />
+33-->[com.google.android.gms:play-services-measurement:23.0.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\13870a1d660595bc9cc8b95b56471985\transformed\jetified-play-services-measurement-23.0.0\AndroidManifest.xml:26:5-110
+33-->[com.google.android.gms:play-services-measurement:23.0.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\13870a1d660595bc9cc8b95b56471985\transformed\jetified-play-services-measurement-23.0.0\AndroidManifest.xml:26:22-107
+34
+35    <permission
+35-->[androidx.core:core:1.13.1] C:\Users\nautilo\.gradle\caches\8.12\transforms\a2379afb88371b9c5bb51671cdff2d5d\transformed\core-1.13.1\AndroidManifest.xml:22:5-24:47
+36        android:name="com.example.artattoo.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+36-->[androidx.core:core:1.13.1] C:\Users\nautilo\.gradle\caches\8.12\transforms\a2379afb88371b9c5bb51671cdff2d5d\transformed\core-1.13.1\AndroidManifest.xml:23:9-81
+37        android:protectionLevel="signature" />
+37-->[androidx.core:core:1.13.1] C:\Users\nautilo\.gradle\caches\8.12\transforms\a2379afb88371b9c5bb51671cdff2d5d\transformed\core-1.13.1\AndroidManifest.xml:24:9-44
+38
+39    <uses-permission android:name="com.example.artattoo.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+39-->[androidx.core:core:1.13.1] C:\Users\nautilo\.gradle\caches\8.12\transforms\a2379afb88371b9c5bb51671cdff2d5d\transformed\core-1.13.1\AndroidManifest.xml:26:5-97
+39-->[androidx.core:core:1.13.1] C:\Users\nautilo\.gradle\caches\8.12\transforms\a2379afb88371b9c5bb51671cdff2d5d\transformed\core-1.13.1\AndroidManifest.xml:26:22-94
+40
+41    <application
+42        android:name="android.app.Application"
+43        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+43-->[androidx.core:core:1.13.1] C:\Users\nautilo\.gradle\caches\8.12\transforms\a2379afb88371b9c5bb51671cdff2d5d\transformed\core-1.13.1\AndroidManifest.xml:28:18-86
+44        android:debuggable="true"
+45        android:extractNativeLibs="false"
+46        android:icon="@mipmap/ic_launcher"
+47        android:label="ArtTattoo"
+48        android:theme="@style/NormalTheme"
+49        android:usesCleartextTraffic="true" >
+50
+51        <!-- Defaults para notificaciones si alguna llega con payload "notification" -->
+52        <meta-data
+53            android:name="com.google.firebase.messaging.default_notification_icon"
+54            android:resource="@mipmap/ic_launcher" />
+55        <meta-data
+56            android:name="com.google.firebase.messaging.default_notification_color"
+57            android:resource="@android:color/white" />
+58
+59        <activity
+60            android:name="com.example.artattoo.MainActivity"
+61            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+62            android:exported="true"
+63            android:hardwareAccelerated="true"
+64            android:launchMode="singleTop"
+65            android:taskAffinity=""
+66            android:theme="@style/LaunchTheme"
+67            android:windowSoftInputMode="adjustResize" >
+68
+69            <!-- Tema que se aplica cuando Flutter ya dibujó el primer frame -->
+70            <meta-data
+71                android:name="io.flutter.embedding.android.NormalTheme"
+72                android:resource="@style/NormalTheme" />
+73
+74            <!-- Lanzador -->
+75            <intent-filter>
+76                <action android:name="android.intent.action.MAIN" />
+77
+78                <category android:name="android.intent.category.LAUNCHER" />
+79            </intent-filter>
+80
+81            <!-- ✅ Deep link de retorno desde MercadoPago: artattoo://pay-result?... -->
+82            <intent-filter android:autoVerify="false" >
+83                <action android:name="android.intent.action.VIEW" />
+84
+85                <category android:name="android.intent.category.DEFAULT" />
+86                <category android:name="android.intent.category.BROWSABLE" />
+87
+88                <data
+88-->C:\Users\nautilo\Desktop\APT\ARTattoo\android\app\src\main\AndroidManifest.xml:64:13-51
+89                    android:host="pay-result"
+90                    android:scheme="artattoo" />
+91            </intent-filter>
+92        </activity>
+93
+94        <!-- No borrar: lo usa Flutter -->
+95        <meta-data
+96            android:name="flutterEmbedding"
+97            android:value="2" />
+98
+99        <provider
+99-->[:image_picker_android] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.13+5\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:9:9-17:20
+100            android:name="io.flutter.plugins.imagepicker.ImagePickerFileProvider"
+100-->[:image_picker_android] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.13+5\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:10:13-82
+101            android:authorities="com.example.artattoo.flutter.image_provider"
+101-->[:image_picker_android] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.13+5\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:11:13-74
+102            android:exported="false"
+102-->[:image_picker_android] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.13+5\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:12:13-37
+103            android:grantUriPermissions="true" >
+103-->[:image_picker_android] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.13+5\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:13:13-47
+104            <meta-data
+104-->[:image_picker_android] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.13+5\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:14:13-16:75
+105                android:name="android.support.FILE_PROVIDER_PATHS"
+105-->[:image_picker_android] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.13+5\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:15:17-67
+106                android:resource="@xml/flutter_image_picker_file_paths" />
+106-->[:image_picker_android] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.13+5\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:16:17-72
+107        </provider> <!-- Trigger Google Play services to install the backported photo picker module. -->
+108        <service
+108-->[:image_picker_android] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.13+5\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:19:9-31:19
+109            android:name="com.google.android.gms.metadata.ModuleDependencies"
+109-->[:image_picker_android] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.13+5\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:20:13-78
+110            android:enabled="false"
+110-->[:image_picker_android] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.13+5\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:21:13-36
+111            android:exported="false" >
+111-->[:image_picker_android] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.13+5\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:22:13-37
+112            <intent-filter>
+112-->[:image_picker_android] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.13+5\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:24:13-26:29
+113                <action android:name="com.google.android.gms.metadata.MODULE_DEPENDENCIES" />
+113-->[:image_picker_android] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.13+5\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:25:17-94
+113-->[:image_picker_android] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.13+5\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:25:25-91
+114            </intent-filter>
+115
+116            <meta-data
+116-->[:image_picker_android] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.13+5\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:28:13-30:36
+117                android:name="photopicker_activity:0:required"
+117-->[:image_picker_android] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.13+5\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:29:17-63
+118                android:value="" />
+118-->[:image_picker_android] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\image_picker_android-0.8.13+5\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:30:17-33
+119        </service>
+120
+121        <activity
+121-->[:url_launcher_android] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_android-6.3.23\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:8:9-11:74
+122            android:name="io.flutter.plugins.urllauncher.WebViewActivity"
+122-->[:url_launcher_android] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_android-6.3.23\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:9:13-74
+123            android:exported="false"
+123-->[:url_launcher_android] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_android-6.3.23\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:10:13-37
+124            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+124-->[:url_launcher_android] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\url_launcher_android-6.3.23\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:11:13-71
+125
+126        <service
+126-->[:firebase_messaging] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging-15.2.10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:14:9-17:72
+127            android:name="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingBackgroundService"
+127-->[:firebase_messaging] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging-15.2.10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:15:13-107
+128            android:exported="false"
+128-->[:firebase_messaging] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging-15.2.10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:16:13-37
+129            android:permission="android.permission.BIND_JOB_SERVICE" />
+129-->[:firebase_messaging] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging-15.2.10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:17:13-69
+130        <service
+130-->[:firebase_messaging] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging-15.2.10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:18:9-24:19
+131            android:name="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingService"
+131-->[:firebase_messaging] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging-15.2.10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:19:13-97
+132            android:exported="false" >
+132-->[:firebase_messaging] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging-15.2.10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:20:13-37
+133            <intent-filter>
+133-->[:firebase_messaging] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging-15.2.10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:21:13-23:29
+134                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+134-->[:firebase_messaging] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging-15.2.10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:22:17-78
+134-->[:firebase_messaging] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging-15.2.10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:22:25-75
+135            </intent-filter>
+136        </service>
+137
+138        <receiver
+138-->[:firebase_messaging] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging-15.2.10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:26:9-33:20
+139            android:name="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingReceiver"
+139-->[:firebase_messaging] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging-15.2.10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:27:13-98
+140            android:exported="true"
+140-->[:firebase_messaging] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging-15.2.10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:28:13-36
+141            android:permission="com.google.android.c2dm.permission.SEND" >
+141-->[:firebase_messaging] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging-15.2.10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:29:13-73
+142            <intent-filter>
+142-->[:firebase_messaging] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging-15.2.10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:30:13-32:29
+143                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+143-->[:firebase_messaging] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging-15.2.10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:31:17-81
+143-->[:firebase_messaging] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging-15.2.10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:31:25-78
+144            </intent-filter>
+145        </receiver>
+146
+147        <service
+147-->[:firebase_messaging] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging-15.2.10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:35:9-39:19
+148            android:name="com.google.firebase.components.ComponentDiscoveryService"
+148-->[:firebase_messaging] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging-15.2.10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:35:18-89
+149            android:directBootAware="true"
+149-->[com.google.firebase:firebase-common:22.0.1] C:\Users\nautilo\.gradle\caches\8.12\transforms\61a56b4596701e95a52d693787ac317b\transformed\jetified-firebase-common-22.0.1\AndroidManifest.xml:32:13-43
+150            android:exported="false" >
+150-->[com.google.firebase:firebase-messaging:25.0.1] C:\Users\nautilo\.gradle\caches\8.12\transforms\1a66bdb21f919ebc2f9055a66ed9d21d\transformed\jetified-firebase-messaging-25.0.1\AndroidManifest.xml:56:13-37
+151            <meta-data
+151-->[:firebase_messaging] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging-15.2.10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:36:13-38:85
+152                android:name="com.google.firebase.components:io.flutter.plugins.firebase.messaging.FlutterFirebaseAppRegistrar"
+152-->[:firebase_messaging] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging-15.2.10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:37:17-128
+153                android:value="com.google.firebase.components.ComponentRegistrar" />
+153-->[:firebase_messaging] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging-15.2.10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:38:17-82
+154            <meta-data
+154-->[:firebase_core] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_core-3.15.2\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:9:13-11:85
+155                android:name="com.google.firebase.components:io.flutter.plugins.firebase.core.FlutterFirebaseCoreRegistrar"
+155-->[:firebase_core] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_core-3.15.2\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:10:17-124
+156                android:value="com.google.firebase.components.ComponentRegistrar" />
+156-->[:firebase_core] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_core-3.15.2\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:11:17-82
+157            <meta-data
+157-->[com.google.firebase:firebase-messaging:25.0.1] C:\Users\nautilo\.gradle\caches\8.12\transforms\1a66bdb21f919ebc2f9055a66ed9d21d\transformed\jetified-firebase-messaging-25.0.1\AndroidManifest.xml:57:13-59:85
+158                android:name="com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingKtxRegistrar"
+158-->[com.google.firebase:firebase-messaging:25.0.1] C:\Users\nautilo\.gradle\caches\8.12\transforms\1a66bdb21f919ebc2f9055a66ed9d21d\transformed\jetified-firebase-messaging-25.0.1\AndroidManifest.xml:58:17-122
+159                android:value="com.google.firebase.components.ComponentRegistrar" />
+159-->[com.google.firebase:firebase-messaging:25.0.1] C:\Users\nautilo\.gradle\caches\8.12\transforms\1a66bdb21f919ebc2f9055a66ed9d21d\transformed\jetified-firebase-messaging-25.0.1\AndroidManifest.xml:59:17-82
+160            <meta-data
+160-->[com.google.firebase:firebase-messaging:25.0.1] C:\Users\nautilo\.gradle\caches\8.12\transforms\1a66bdb21f919ebc2f9055a66ed9d21d\transformed\jetified-firebase-messaging-25.0.1\AndroidManifest.xml:60:13-62:85
+161                android:name="com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingRegistrar"
+161-->[com.google.firebase:firebase-messaging:25.0.1] C:\Users\nautilo\.gradle\caches\8.12\transforms\1a66bdb21f919ebc2f9055a66ed9d21d\transformed\jetified-firebase-messaging-25.0.1\AndroidManifest.xml:61:17-119
+162                android:value="com.google.firebase.components.ComponentRegistrar" />
+162-->[com.google.firebase:firebase-messaging:25.0.1] C:\Users\nautilo\.gradle\caches\8.12\transforms\1a66bdb21f919ebc2f9055a66ed9d21d\transformed\jetified-firebase-messaging-25.0.1\AndroidManifest.xml:62:17-82
+163            <meta-data
+163-->[com.google.android.gms:play-services-measurement-api:23.0.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\c78288f82736fcf1fbe1b57b49d5575c\transformed\jetified-play-services-measurement-api-23.0.0\AndroidManifest.xml:33:13-35:85
+164                android:name="com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar"
+164-->[com.google.android.gms:play-services-measurement-api:23.0.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\c78288f82736fcf1fbe1b57b49d5575c\transformed\jetified-play-services-measurement-api-23.0.0\AndroidManifest.xml:34:17-139
+165                android:value="com.google.firebase.components.ComponentRegistrar" />
+165-->[com.google.android.gms:play-services-measurement-api:23.0.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\c78288f82736fcf1fbe1b57b49d5575c\transformed\jetified-play-services-measurement-api-23.0.0\AndroidManifest.xml:35:17-82
+166            <meta-data
+166-->[com.google.firebase:firebase-installations:19.0.1] C:\Users\nautilo\.gradle\caches\8.12\transforms\72ec6c259a40940ad84efcfcf2000191\transformed\jetified-firebase-installations-19.0.1\AndroidManifest.xml:15:13-17:85
+167                android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsKtxRegistrar"
+167-->[com.google.firebase:firebase-installations:19.0.1] C:\Users\nautilo\.gradle\caches\8.12\transforms\72ec6c259a40940ad84efcfcf2000191\transformed\jetified-firebase-installations-19.0.1\AndroidManifest.xml:16:17-130
+168                android:value="com.google.firebase.components.ComponentRegistrar" />
+168-->[com.google.firebase:firebase-installations:19.0.1] C:\Users\nautilo\.gradle\caches\8.12\transforms\72ec6c259a40940ad84efcfcf2000191\transformed\jetified-firebase-installations-19.0.1\AndroidManifest.xml:17:17-82
+169            <meta-data
+169-->[com.google.firebase:firebase-installations:19.0.1] C:\Users\nautilo\.gradle\caches\8.12\transforms\72ec6c259a40940ad84efcfcf2000191\transformed\jetified-firebase-installations-19.0.1\AndroidManifest.xml:18:13-20:85
+170                android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar"
+170-->[com.google.firebase:firebase-installations:19.0.1] C:\Users\nautilo\.gradle\caches\8.12\transforms\72ec6c259a40940ad84efcfcf2000191\transformed\jetified-firebase-installations-19.0.1\AndroidManifest.xml:19:17-127
+171                android:value="com.google.firebase.components.ComponentRegistrar" />
+171-->[com.google.firebase:firebase-installations:19.0.1] C:\Users\nautilo\.gradle\caches\8.12\transforms\72ec6c259a40940ad84efcfcf2000191\transformed\jetified-firebase-installations-19.0.1\AndroidManifest.xml:20:17-82
+172            <meta-data
+172-->[com.google.firebase:firebase-common:22.0.1] C:\Users\nautilo\.gradle\caches\8.12\transforms\61a56b4596701e95a52d693787ac317b\transformed\jetified-firebase-common-22.0.1\AndroidManifest.xml:35:13-37:85
+173                android:name="com.google.firebase.components:com.google.firebase.FirebaseCommonKtxRegistrar"
+173-->[com.google.firebase:firebase-common:22.0.1] C:\Users\nautilo\.gradle\caches\8.12\transforms\61a56b4596701e95a52d693787ac317b\transformed\jetified-firebase-common-22.0.1\AndroidManifest.xml:36:17-109
+174                android:value="com.google.firebase.components.ComponentRegistrar" />
+174-->[com.google.firebase:firebase-common:22.0.1] C:\Users\nautilo\.gradle\caches\8.12\transforms\61a56b4596701e95a52d693787ac317b\transformed\jetified-firebase-common-22.0.1\AndroidManifest.xml:37:17-82
+175            <meta-data
+175-->[com.google.firebase:firebase-datatransport:18.2.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\6b12e7eaaf8fc07a82f1d0dfe4820283\transformed\jetified-firebase-datatransport-18.2.0\AndroidManifest.xml:25:13-27:85
+176                android:name="com.google.firebase.components:com.google.firebase.datatransport.TransportRegistrar"
+176-->[com.google.firebase:firebase-datatransport:18.2.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\6b12e7eaaf8fc07a82f1d0dfe4820283\transformed\jetified-firebase-datatransport-18.2.0\AndroidManifest.xml:26:17-115
+177                android:value="com.google.firebase.components.ComponentRegistrar" />
+177-->[com.google.firebase:firebase-datatransport:18.2.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\6b12e7eaaf8fc07a82f1d0dfe4820283\transformed\jetified-firebase-datatransport-18.2.0\AndroidManifest.xml:27:17-82
+178        </service>
+179
+180        <provider
+180-->[:firebase_messaging] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging-15.2.10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:41:9-45:38
+181            android:name="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingInitProvider"
+181-->[:firebase_messaging] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging-15.2.10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:42:13-102
+182            android:authorities="com.example.artattoo.flutterfirebasemessaginginitprovider"
+182-->[:firebase_messaging] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging-15.2.10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:43:13-88
+183            android:exported="false"
+183-->[:firebase_messaging] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging-15.2.10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:44:13-37
+184            android:initOrder="99" />
+184-->[:firebase_messaging] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging-15.2.10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:45:13-35
+185        <provider
+185-->[androidx.emoji2:emoji2:1.3.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\12d30618eec5b6a21e4a83bf523f4fa4\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:24:9-32:20
+186            android:name="androidx.startup.InitializationProvider"
+186-->[androidx.emoji2:emoji2:1.3.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\12d30618eec5b6a21e4a83bf523f4fa4\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:25:13-67
+187            android:authorities="com.example.artattoo.androidx-startup"
+187-->[androidx.emoji2:emoji2:1.3.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\12d30618eec5b6a21e4a83bf523f4fa4\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:26:13-68
+188            android:exported="false" >
+188-->[androidx.emoji2:emoji2:1.3.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\12d30618eec5b6a21e4a83bf523f4fa4\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:27:13-37
+189            <meta-data
+189-->[androidx.emoji2:emoji2:1.3.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\12d30618eec5b6a21e4a83bf523f4fa4\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:29:13-31:52
+190                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+190-->[androidx.emoji2:emoji2:1.3.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\12d30618eec5b6a21e4a83bf523f4fa4\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:30:17-75
+191                android:value="androidx.startup" />
+191-->[androidx.emoji2:emoji2:1.3.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\12d30618eec5b6a21e4a83bf523f4fa4\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:31:17-49
+192            <meta-data
+192-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\58c67bca3117d21502a9e00352a8e2b5\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:29:13-31:52
+193                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+193-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\58c67bca3117d21502a9e00352a8e2b5\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:30:17-78
+194                android:value="androidx.startup" />
+194-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\58c67bca3117d21502a9e00352a8e2b5\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:31:17-49
+195            <meta-data
+195-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\39f0dd393972c82742ec80ffa940605a\transformed\jetified-profileinstaller-1.4.0\AndroidManifest.xml:29:13-31:52
+196                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+196-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\39f0dd393972c82742ec80ffa940605a\transformed\jetified-profileinstaller-1.4.0\AndroidManifest.xml:30:17-85
+197                android:value="androidx.startup" />
+197-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\39f0dd393972c82742ec80ffa940605a\transformed\jetified-profileinstaller-1.4.0\AndroidManifest.xml:31:17-49
+198        </provider>
+199
+200        <uses-library
+200-->[androidx.window:window:1.2.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\0cdf1a3966109268c315c1f213812592\transformed\jetified-window-1.2.0\AndroidManifest.xml:23:9-25:40
+201            android:name="androidx.window.extensions"
+201-->[androidx.window:window:1.2.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\0cdf1a3966109268c315c1f213812592\transformed\jetified-window-1.2.0\AndroidManifest.xml:24:13-54
+202            android:required="false" />
+202-->[androidx.window:window:1.2.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\0cdf1a3966109268c315c1f213812592\transformed\jetified-window-1.2.0\AndroidManifest.xml:25:13-37
+203        <uses-library
+203-->[androidx.window:window:1.2.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\0cdf1a3966109268c315c1f213812592\transformed\jetified-window-1.2.0\AndroidManifest.xml:26:9-28:40
+204            android:name="androidx.window.sidecar"
+204-->[androidx.window:window:1.2.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\0cdf1a3966109268c315c1f213812592\transformed\jetified-window-1.2.0\AndroidManifest.xml:27:13-51
+205            android:required="false" />
+205-->[androidx.window:window:1.2.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\0cdf1a3966109268c315c1f213812592\transformed\jetified-window-1.2.0\AndroidManifest.xml:28:13-37
+206
+207        <receiver
+207-->[com.google.firebase:firebase-messaging:25.0.1] C:\Users\nautilo\.gradle\caches\8.12\transforms\1a66bdb21f919ebc2f9055a66ed9d21d\transformed\jetified-firebase-messaging-25.0.1\AndroidManifest.xml:29:9-40:20
+208            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
+208-->[com.google.firebase:firebase-messaging:25.0.1] C:\Users\nautilo\.gradle\caches\8.12\transforms\1a66bdb21f919ebc2f9055a66ed9d21d\transformed\jetified-firebase-messaging-25.0.1\AndroidManifest.xml:30:13-78
+209            android:exported="true"
+209-->[com.google.firebase:firebase-messaging:25.0.1] C:\Users\nautilo\.gradle\caches\8.12\transforms\1a66bdb21f919ebc2f9055a66ed9d21d\transformed\jetified-firebase-messaging-25.0.1\AndroidManifest.xml:31:13-36
+210            android:permission="com.google.android.c2dm.permission.SEND" >
+210-->[com.google.firebase:firebase-messaging:25.0.1] C:\Users\nautilo\.gradle\caches\8.12\transforms\1a66bdb21f919ebc2f9055a66ed9d21d\transformed\jetified-firebase-messaging-25.0.1\AndroidManifest.xml:32:13-73
+211            <intent-filter>
+211-->[:firebase_messaging] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging-15.2.10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:30:13-32:29
+212                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+212-->[:firebase_messaging] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging-15.2.10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:31:17-81
+212-->[:firebase_messaging] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging-15.2.10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:31:25-78
+213            </intent-filter>
+214
+215            <meta-data
+215-->[com.google.firebase:firebase-messaging:25.0.1] C:\Users\nautilo\.gradle\caches\8.12\transforms\1a66bdb21f919ebc2f9055a66ed9d21d\transformed\jetified-firebase-messaging-25.0.1\AndroidManifest.xml:37:13-39:40
+216                android:name="com.google.android.gms.cloudmessaging.FINISHED_AFTER_HANDLED"
+216-->[com.google.firebase:firebase-messaging:25.0.1] C:\Users\nautilo\.gradle\caches\8.12\transforms\1a66bdb21f919ebc2f9055a66ed9d21d\transformed\jetified-firebase-messaging-25.0.1\AndroidManifest.xml:38:17-92
+217                android:value="true" />
+217-->[com.google.firebase:firebase-messaging:25.0.1] C:\Users\nautilo\.gradle\caches\8.12\transforms\1a66bdb21f919ebc2f9055a66ed9d21d\transformed\jetified-firebase-messaging-25.0.1\AndroidManifest.xml:39:17-37
+218        </receiver>
+219        <!--
+220             FirebaseMessagingService performs security checks at runtime,
+221             but set to not exported to explicitly avoid allowing another app to call it.
+222        -->
+223        <service
+223-->[com.google.firebase:firebase-messaging:25.0.1] C:\Users\nautilo\.gradle\caches\8.12\transforms\1a66bdb21f919ebc2f9055a66ed9d21d\transformed\jetified-firebase-messaging-25.0.1\AndroidManifest.xml:46:9-53:19
+224            android:name="com.google.firebase.messaging.FirebaseMessagingService"
+224-->[com.google.firebase:firebase-messaging:25.0.1] C:\Users\nautilo\.gradle\caches\8.12\transforms\1a66bdb21f919ebc2f9055a66ed9d21d\transformed\jetified-firebase-messaging-25.0.1\AndroidManifest.xml:47:13-82
+225            android:directBootAware="true"
+225-->[com.google.firebase:firebase-messaging:25.0.1] C:\Users\nautilo\.gradle\caches\8.12\transforms\1a66bdb21f919ebc2f9055a66ed9d21d\transformed\jetified-firebase-messaging-25.0.1\AndroidManifest.xml:48:13-43
+226            android:exported="false" >
+226-->[com.google.firebase:firebase-messaging:25.0.1] C:\Users\nautilo\.gradle\caches\8.12\transforms\1a66bdb21f919ebc2f9055a66ed9d21d\transformed\jetified-firebase-messaging-25.0.1\AndroidManifest.xml:49:13-37
+227            <intent-filter android:priority="-500" >
+227-->[:firebase_messaging] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging-15.2.10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:21:13-23:29
+228                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+228-->[:firebase_messaging] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging-15.2.10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:22:17-78
+228-->[:firebase_messaging] C:\Users\nautilo\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_messaging-15.2.10\android\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:22:25-75
+229            </intent-filter>
+230        </service>
+231
+232        <provider
+232-->[com.google.firebase:firebase-common:22.0.1] C:\Users\nautilo\.gradle\caches\8.12\transforms\61a56b4596701e95a52d693787ac317b\transformed\jetified-firebase-common-22.0.1\AndroidManifest.xml:23:9-28:39
+233            android:name="com.google.firebase.provider.FirebaseInitProvider"
+233-->[com.google.firebase:firebase-common:22.0.1] C:\Users\nautilo\.gradle\caches\8.12\transforms\61a56b4596701e95a52d693787ac317b\transformed\jetified-firebase-common-22.0.1\AndroidManifest.xml:24:13-77
+234            android:authorities="com.example.artattoo.firebaseinitprovider"
+234-->[com.google.firebase:firebase-common:22.0.1] C:\Users\nautilo\.gradle\caches\8.12\transforms\61a56b4596701e95a52d693787ac317b\transformed\jetified-firebase-common-22.0.1\AndroidManifest.xml:25:13-72
+235            android:directBootAware="true"
+235-->[com.google.firebase:firebase-common:22.0.1] C:\Users\nautilo\.gradle\caches\8.12\transforms\61a56b4596701e95a52d693787ac317b\transformed\jetified-firebase-common-22.0.1\AndroidManifest.xml:26:13-43
+236            android:exported="false"
+236-->[com.google.firebase:firebase-common:22.0.1] C:\Users\nautilo\.gradle\caches\8.12\transforms\61a56b4596701e95a52d693787ac317b\transformed\jetified-firebase-common-22.0.1\AndroidManifest.xml:27:13-37
+237            android:initOrder="100" />
+237-->[com.google.firebase:firebase-common:22.0.1] C:\Users\nautilo\.gradle\caches\8.12\transforms\61a56b4596701e95a52d693787ac317b\transformed\jetified-firebase-common-22.0.1\AndroidManifest.xml:28:13-36
+238
+239        <receiver
+239-->[com.google.android.gms:play-services-measurement:23.0.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\13870a1d660595bc9cc8b95b56471985\transformed\jetified-play-services-measurement-23.0.0\AndroidManifest.xml:29:9-33:20
+240            android:name="com.google.android.gms.measurement.AppMeasurementReceiver"
+240-->[com.google.android.gms:play-services-measurement:23.0.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\13870a1d660595bc9cc8b95b56471985\transformed\jetified-play-services-measurement-23.0.0\AndroidManifest.xml:30:13-85
+241            android:enabled="true"
+241-->[com.google.android.gms:play-services-measurement:23.0.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\13870a1d660595bc9cc8b95b56471985\transformed\jetified-play-services-measurement-23.0.0\AndroidManifest.xml:31:13-35
+242            android:exported="false" >
+242-->[com.google.android.gms:play-services-measurement:23.0.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\13870a1d660595bc9cc8b95b56471985\transformed\jetified-play-services-measurement-23.0.0\AndroidManifest.xml:32:13-37
+243        </receiver>
+244
+245        <service
+245-->[com.google.android.gms:play-services-measurement:23.0.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\13870a1d660595bc9cc8b95b56471985\transformed\jetified-play-services-measurement-23.0.0\AndroidManifest.xml:35:9-38:40
+246            android:name="com.google.android.gms.measurement.AppMeasurementService"
+246-->[com.google.android.gms:play-services-measurement:23.0.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\13870a1d660595bc9cc8b95b56471985\transformed\jetified-play-services-measurement-23.0.0\AndroidManifest.xml:36:13-84
+247            android:enabled="true"
+247-->[com.google.android.gms:play-services-measurement:23.0.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\13870a1d660595bc9cc8b95b56471985\transformed\jetified-play-services-measurement-23.0.0\AndroidManifest.xml:37:13-35
+248            android:exported="false" />
+248-->[com.google.android.gms:play-services-measurement:23.0.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\13870a1d660595bc9cc8b95b56471985\transformed\jetified-play-services-measurement-23.0.0\AndroidManifest.xml:38:13-37
+249        <service
+249-->[com.google.android.gms:play-services-measurement:23.0.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\13870a1d660595bc9cc8b95b56471985\transformed\jetified-play-services-measurement-23.0.0\AndroidManifest.xml:39:9-43:72
+250            android:name="com.google.android.gms.measurement.AppMeasurementJobService"
+250-->[com.google.android.gms:play-services-measurement:23.0.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\13870a1d660595bc9cc8b95b56471985\transformed\jetified-play-services-measurement-23.0.0\AndroidManifest.xml:40:13-87
+251            android:enabled="true"
+251-->[com.google.android.gms:play-services-measurement:23.0.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\13870a1d660595bc9cc8b95b56471985\transformed\jetified-play-services-measurement-23.0.0\AndroidManifest.xml:41:13-35
+252            android:exported="false"
+252-->[com.google.android.gms:play-services-measurement:23.0.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\13870a1d660595bc9cc8b95b56471985\transformed\jetified-play-services-measurement-23.0.0\AndroidManifest.xml:42:13-37
+253            android:permission="android.permission.BIND_JOB_SERVICE" />
+253-->[com.google.android.gms:play-services-measurement:23.0.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\13870a1d660595bc9cc8b95b56471985\transformed\jetified-play-services-measurement-23.0.0\AndroidManifest.xml:43:13-69
+254
+255        <uses-library
+255-->[androidx.privacysandbox.ads:ads-adservices:1.1.0-beta11] C:\Users\nautilo\.gradle\caches\8.12\transforms\1f3c1080caccaecaf6307829da34f5a4\transformed\jetified-ads-adservices-1.1.0-beta11\AndroidManifest.xml:23:9-25:40
+256            android:name="android.ext.adservices"
+256-->[androidx.privacysandbox.ads:ads-adservices:1.1.0-beta11] C:\Users\nautilo\.gradle\caches\8.12\transforms\1f3c1080caccaecaf6307829da34f5a4\transformed\jetified-ads-adservices-1.1.0-beta11\AndroidManifest.xml:24:13-50
+257            android:required="false" />
+257-->[androidx.privacysandbox.ads:ads-adservices:1.1.0-beta11] C:\Users\nautilo\.gradle\caches\8.12\transforms\1f3c1080caccaecaf6307829da34f5a4\transformed\jetified-ads-adservices-1.1.0-beta11\AndroidManifest.xml:25:13-37
+258
+259        <activity
+259-->[com.google.android.gms:play-services-base:18.5.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\003fb59386d8f39093f4557408860a19\transformed\jetified-play-services-base-18.5.0\AndroidManifest.xml:5:9-173
+260            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+260-->[com.google.android.gms:play-services-base:18.5.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\003fb59386d8f39093f4557408860a19\transformed\jetified-play-services-base-18.5.0\AndroidManifest.xml:5:19-85
+261            android:exported="false"
+261-->[com.google.android.gms:play-services-base:18.5.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\003fb59386d8f39093f4557408860a19\transformed\jetified-play-services-base-18.5.0\AndroidManifest.xml:5:146-170
+262            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+262-->[com.google.android.gms:play-services-base:18.5.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\003fb59386d8f39093f4557408860a19\transformed\jetified-play-services-base-18.5.0\AndroidManifest.xml:5:86-145
+263
+264        <meta-data
+264-->[com.google.android.gms:play-services-basement:18.5.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\d409daef0bcb8e1da03d5e6edb79acc6\transformed\jetified-play-services-basement-18.5.0\AndroidManifest.xml:21:9-23:69
+265            android:name="com.google.android.gms.version"
+265-->[com.google.android.gms:play-services-basement:18.5.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\d409daef0bcb8e1da03d5e6edb79acc6\transformed\jetified-play-services-basement-18.5.0\AndroidManifest.xml:22:13-58
+266            android:value="@integer/google_play_services_version" />
+266-->[com.google.android.gms:play-services-basement:18.5.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\d409daef0bcb8e1da03d5e6edb79acc6\transformed\jetified-play-services-basement-18.5.0\AndroidManifest.xml:23:13-66
+267
+268        <service
+268-->[com.google.android.datatransport:transport-backend-cct:3.1.9] C:\Users\nautilo\.gradle\caches\8.12\transforms\cace452c45e66a0aa09723245dd57ae2\transformed\jetified-transport-backend-cct-3.1.9\AndroidManifest.xml:28:9-34:19
+269            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
+269-->[com.google.android.datatransport:transport-backend-cct:3.1.9] C:\Users\nautilo\.gradle\caches\8.12\transforms\cace452c45e66a0aa09723245dd57ae2\transformed\jetified-transport-backend-cct-3.1.9\AndroidManifest.xml:29:13-103
+270            android:exported="false" >
+270-->[com.google.android.datatransport:transport-backend-cct:3.1.9] C:\Users\nautilo\.gradle\caches\8.12\transforms\cace452c45e66a0aa09723245dd57ae2\transformed\jetified-transport-backend-cct-3.1.9\AndroidManifest.xml:30:13-37
+271            <meta-data
+271-->[com.google.android.datatransport:transport-backend-cct:3.1.9] C:\Users\nautilo\.gradle\caches\8.12\transforms\cace452c45e66a0aa09723245dd57ae2\transformed\jetified-transport-backend-cct-3.1.9\AndroidManifest.xml:31:13-33:39
+272                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
+272-->[com.google.android.datatransport:transport-backend-cct:3.1.9] C:\Users\nautilo\.gradle\caches\8.12\transforms\cace452c45e66a0aa09723245dd57ae2\transformed\jetified-transport-backend-cct-3.1.9\AndroidManifest.xml:32:17-94
+273                android:value="cct" />
+273-->[com.google.android.datatransport:transport-backend-cct:3.1.9] C:\Users\nautilo\.gradle\caches\8.12\transforms\cace452c45e66a0aa09723245dd57ae2\transformed\jetified-transport-backend-cct-3.1.9\AndroidManifest.xml:33:17-36
+274        </service>
+275        <service
+275-->[com.google.android.datatransport:transport-runtime:3.1.9] C:\Users\nautilo\.gradle\caches\8.12\transforms\92c9d775df4ebd3267348c53a6a268d5\transformed\jetified-transport-runtime-3.1.9\AndroidManifest.xml:26:9-30:19
+276            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
+276-->[com.google.android.datatransport:transport-runtime:3.1.9] C:\Users\nautilo\.gradle\caches\8.12\transforms\92c9d775df4ebd3267348c53a6a268d5\transformed\jetified-transport-runtime-3.1.9\AndroidManifest.xml:27:13-117
+277            android:exported="false"
+277-->[com.google.android.datatransport:transport-runtime:3.1.9] C:\Users\nautilo\.gradle\caches\8.12\transforms\92c9d775df4ebd3267348c53a6a268d5\transformed\jetified-transport-runtime-3.1.9\AndroidManifest.xml:28:13-37
+278            android:permission="android.permission.BIND_JOB_SERVICE" >
+278-->[com.google.android.datatransport:transport-runtime:3.1.9] C:\Users\nautilo\.gradle\caches\8.12\transforms\92c9d775df4ebd3267348c53a6a268d5\transformed\jetified-transport-runtime-3.1.9\AndroidManifest.xml:29:13-69
+279        </service>
+280
+281        <receiver
+281-->[com.google.android.datatransport:transport-runtime:3.1.9] C:\Users\nautilo\.gradle\caches\8.12\transforms\92c9d775df4ebd3267348c53a6a268d5\transformed\jetified-transport-runtime-3.1.9\AndroidManifest.xml:32:9-34:40
+282            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
+282-->[com.google.android.datatransport:transport-runtime:3.1.9] C:\Users\nautilo\.gradle\caches\8.12\transforms\92c9d775df4ebd3267348c53a6a268d5\transformed\jetified-transport-runtime-3.1.9\AndroidManifest.xml:33:13-132
+283            android:exported="false" />
+283-->[com.google.android.datatransport:transport-runtime:3.1.9] C:\Users\nautilo\.gradle\caches\8.12\transforms\92c9d775df4ebd3267348c53a6a268d5\transformed\jetified-transport-runtime-3.1.9\AndroidManifest.xml:34:13-37
+284        <receiver
+284-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\39f0dd393972c82742ec80ffa940605a\transformed\jetified-profileinstaller-1.4.0\AndroidManifest.xml:34:9-52:20
+285            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+285-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\39f0dd393972c82742ec80ffa940605a\transformed\jetified-profileinstaller-1.4.0\AndroidManifest.xml:35:13-76
+286            android:directBootAware="false"
+286-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\39f0dd393972c82742ec80ffa940605a\transformed\jetified-profileinstaller-1.4.0\AndroidManifest.xml:36:13-44
+287            android:enabled="true"
+287-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\39f0dd393972c82742ec80ffa940605a\transformed\jetified-profileinstaller-1.4.0\AndroidManifest.xml:37:13-35
+288            android:exported="true"
+288-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\39f0dd393972c82742ec80ffa940605a\transformed\jetified-profileinstaller-1.4.0\AndroidManifest.xml:38:13-36
+289            android:permission="android.permission.DUMP" >
+289-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\39f0dd393972c82742ec80ffa940605a\transformed\jetified-profileinstaller-1.4.0\AndroidManifest.xml:39:13-57
+290            <intent-filter>
+290-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\39f0dd393972c82742ec80ffa940605a\transformed\jetified-profileinstaller-1.4.0\AndroidManifest.xml:40:13-42:29
+291                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+291-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\39f0dd393972c82742ec80ffa940605a\transformed\jetified-profileinstaller-1.4.0\AndroidManifest.xml:41:17-91
+291-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\39f0dd393972c82742ec80ffa940605a\transformed\jetified-profileinstaller-1.4.0\AndroidManifest.xml:41:25-88
+292            </intent-filter>
+293            <intent-filter>
+293-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\39f0dd393972c82742ec80ffa940605a\transformed\jetified-profileinstaller-1.4.0\AndroidManifest.xml:43:13-45:29
+294                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+294-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\39f0dd393972c82742ec80ffa940605a\transformed\jetified-profileinstaller-1.4.0\AndroidManifest.xml:44:17-85
+294-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\39f0dd393972c82742ec80ffa940605a\transformed\jetified-profileinstaller-1.4.0\AndroidManifest.xml:44:25-82
+295            </intent-filter>
+296            <intent-filter>
+296-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\39f0dd393972c82742ec80ffa940605a\transformed\jetified-profileinstaller-1.4.0\AndroidManifest.xml:46:13-48:29
+297                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+297-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\39f0dd393972c82742ec80ffa940605a\transformed\jetified-profileinstaller-1.4.0\AndroidManifest.xml:47:17-88
+297-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\39f0dd393972c82742ec80ffa940605a\transformed\jetified-profileinstaller-1.4.0\AndroidManifest.xml:47:25-85
+298            </intent-filter>
+299            <intent-filter>
+299-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\39f0dd393972c82742ec80ffa940605a\transformed\jetified-profileinstaller-1.4.0\AndroidManifest.xml:49:13-51:29
+300                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+300-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\39f0dd393972c82742ec80ffa940605a\transformed\jetified-profileinstaller-1.4.0\AndroidManifest.xml:50:17-95
+300-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\nautilo\.gradle\caches\8.12\transforms\39f0dd393972c82742ec80ffa940605a\transformed\jetified-profileinstaller-1.4.0\AndroidManifest.xml:50:25-92
+301            </intent-filter>
+302        </receiver>
+303    </application>
+304
+305</manifest>
