@@ -24,8 +24,9 @@ import 'core/deeplinks.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Handler de mensajes en segundo plano (debe declararse top-level)
-  FirebaseMessaging.onBackgroundMessage(Pns.onBackgroundMessage);
+  // ✅ Handler de mensajes en segundo plano: usar función top-level
+  // definida en core/pns.dart (requisito de Firebase Messaging).
+  FirebaseMessaging.onBackgroundMessage(pnsFirebaseBackgroundHandler);
 
   // Bootstrap de tu app (JWT, sesión, etc.)
   await Api.init();
@@ -180,9 +181,16 @@ class ARTattooApp extends StatelessWidget {
       routes: {
         CatalogScreen.route: (_) => const CatalogScreen(),
         AppointmentsScreen.route: (_) => const AppointmentsScreen(),
+        '/appointments': (_) => const AppointmentsScreen(), // 🔁 alias para PNS
         '/create-design': (_) => const CreateDesignScreen(),
         FavoritesScreen.route: (_) => const FavoritesScreen(),
         ThreadsScreen.route: (_) {
+          final t = authState.token;
+          if (t == null || t.isEmpty) return const LoginScreen();
+          return ThreadsScreen(api: ChatApi(t));
+        },
+        '/threads': (_) {
+          // 🔁 alias para PNS
           final t = authState.token;
           if (t == null || t.isEmpty) return const LoginScreen();
           return ThreadsScreen(api: ChatApi(t));

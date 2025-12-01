@@ -1,5 +1,5 @@
 name: artattoo
-description: Catalogo de tatuajes + reservas (MVP sin Try-On)
+description: Catalogo de tatuajes + reservas + prueba realidad aumentada
 version: 0.1.0
 
 environment:
@@ -19,11 +19,12 @@ dependencies:
   url_launcher: ^6.3.0
   app_links: ^6.2.0
   image_picker: ^1.0.7
+
   # Push & notificaciones
-  firebase_core: ^3.2.0
-  firebase_messaging: ^15.0.0
-  flutter_local_notifications: ^17.2.0
-  timezone:
+  firebase_core: ^3.6.0
+  firebase_messaging: ^15.1.5
+  flutter_local_notifications: ^17.2.3
+  timezone: ^0.9.4
 
 flutter:
   uses-material-design: true

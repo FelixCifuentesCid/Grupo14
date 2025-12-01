@@ -24,7 +24,7 @@ pathlib.Path(UPLOAD_DIR).mkdir(parents=True, exist_ok=True)
 # =========================
 # Config & DB
 # =========================
-load_dotenv()
+load_dotenv(".env", override=True)
 FIREBASE_PROJECT_ID = os.getenv("FIREBASE_PROJECT_ID", "artattoo-5ba9b")
 SCOPES = ["https://www.googleapis.com/auth/firebase.messaging"]
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///tattoo.db")
@@ -443,7 +443,6 @@ def pns_register_token():
         return jsonify({"msg": "ok"})
     finally:
         db.close()
-
 @app.get("/pns/debug_tokens")
 @jwt_required()
 def pns_debug_tokens():
@@ -1557,7 +1556,6 @@ def login():
         return jsonify({"access_token": access, "refresh_token": refresh, "role": user.role, "name": user.name, "user_id": user.id})
     finally:
         db.close()
-
 
 @app.post("/auth/refresh")
 @jwt_required(refresh=True)

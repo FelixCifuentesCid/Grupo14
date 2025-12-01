@@ -8,6 +8,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:http/http.dart' as http;
 
+// ✅ auth_state.dart está en la MISMA carpeta (lib/core/)
 import 'auth_state.dart';
 
 // ⚠️ AJUSTA ESTA URL A TU BACKEND
@@ -42,6 +43,9 @@ class Pns {
     try {
       await Firebase.initializeApp();
     } catch (_) {}
+
+    // Registra handler de background (Android) con función top-level
+    FirebaseMessaging.onBackgroundMessage(pnsFirebaseBackgroundHandler);
 
     // Android 13+: permiso en tiempo de ejecución para notificaciones
     if (Platform.isAndroid) {
@@ -139,11 +143,13 @@ class Pns {
     await _handleMessageRouting(m);
   }
 
-  /// Handler para background (registrado en main). Debe ser top-level (ver al final).
+  /// Handler para background (registrado en init). Debe ser top-level (ver al final).
   static Future<void> onBackgroundMessage(RemoteMessage m) async {
     try {
       await Firebase.initializeApp();
     } catch (_) {}
+    // En Android, si el mensaje tiene "notification", el sistema ya la muestra.
+    // Si es data-only, mostramos local para uniformar la UX:
     await _showLocalFromMessage(m);
   }
 
@@ -157,19 +163,19 @@ class Pns {
     final title = _titleFrom(m, data);
     final body = _bodyFrom(m, data);
 
-    final details = const NotificationDetails(
+    final details = NotificationDetails(
       android: AndroidNotificationDetails(
-        _channelId,
-        _channelName,
-        channelDescription: _channelDesc,
+        _channel.id,
+        _channel.name,
+        channelDescription: _channel.description,
         importance: Importance.max,
         priority: Priority.high,
         playSound: true,
         enableVibration: true,
         icon: '@mipmap/ic_launcher',
-        styleInformation: BigTextStyleInformation(''),
+        styleInformation: BigTextStyleInformation(body),
       ),
-      iOS: DarwinNotificationDetails(
+      iOS: const DarwinNotificationDetails(
         presentAlert: true,
         presentBadge: true,
         presentSound: true,
@@ -187,14 +193,6 @@ class Pns {
       payload: payload,
     );
   }
-
-  // Para poder usar const en NotificationDetails ↑
-  static const String _channelId = _channelIdConst;
-  static const String _channelName = _channelNameConst;
-  static const String _channelDesc = _channelDescConst;
-  static const String _channelIdConst = 'high_importance';
-  static const String _channelNameConst = 'Notificaciones';
-  static const String _channelDescConst = 'Canal para notificaciones importantes';
 
   /// Determina a dónde navegar según "type" y llaves adicionales del data.
   static Future<void> _routeFromData(Map<String, dynamic> data) async {
@@ -271,7 +269,6 @@ class Pns {
   /// Normaliza claves/valores para aceptar variantes que puede mandar el backend.
   /// - type: booking_canceled|booking_cancelled -> booking_canceled
   /// - type: booking_paid -> payment_received
-  /// - type: payment_received -> payment_received
   /// - ids: appointment_id|booking_id|id -> appointment_id
   static void _normalizeDataInPlace(Map<String, dynamic> data) {
     final rawType = (data['type'] ??
@@ -361,7 +358,7 @@ class Pns {
 }
 
 /// Handler top-level para background.
-/// En tu main.dart registra:
+/// En init() ya se registra con:
 /// FirebaseMessaging.onBackgroundMessage(pnsFirebaseBackgroundHandler);
 @pragma('vm:entry-point')
 Future<void> pnsFirebaseBackgroundHandler(RemoteMessage message) async {
